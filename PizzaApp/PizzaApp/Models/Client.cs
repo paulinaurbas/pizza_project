@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace PizzaApp.Models
 {
@@ -21,5 +22,7 @@ namespace PizzaApp.Models
 
         [Required, Phone]
         public string Telephone { get; set; }
+
+        public ICollection<Order> Orders { get; set; }
     }
 }

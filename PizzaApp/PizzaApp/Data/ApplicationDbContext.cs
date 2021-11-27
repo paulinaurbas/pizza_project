@@ -91,6 +91,22 @@ namespace PizzaApp.Data
             {
                 orderMenuItemDish.HasIndex(omd => new { omd.OrderMenuItemId, omd.MenuItemDishId }).IsUnique();
             });
+
+            builder.Entity<ReservationRestaurantTable>(reservationRestaurantTable =>
+            {
+                reservationRestaurantTable.HasIndex(rrt => new { rrt.ReservationId, rrt.RestaurantTableId }).IsUnique();
+            });
+
+            builder.Entity<ReservationStatus>(reservationStatus =>
+            {
+                reservationStatus.HasIndex(rs => rs.Name).IsUnique();
+            });
+
+
+            builder.Entity<RestaurantTable>(restaurantTable =>
+            {
+                restaurantTable.HasIndex(rt => new { rt.RestaurantId, rt.Name }).IsUnique();
+            });
         }
 
         public DbSet<Wholesaler> Wholesalers { get; set; }
@@ -109,5 +125,10 @@ namespace PizzaApp.Data
         public DbSet<OrderMenuItem> OrderMenuItems { get; set; }
         public DbSet<OrderStatus> OrderStatuses { get; set; }
         public DbSet<OrderMenuItemDish> OrderMenuItemDishes { get; set; }
+
+        public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<ReservationRestaurantTable> ReservationRestaurantTables { get; set; }
+        public DbSet<ReservationStatus> ReservationStatuses { get; set; }
+        public DbSet<RestaurantTable> RestaurantTables { get; set; }
     }
 }

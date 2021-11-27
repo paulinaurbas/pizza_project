@@ -28,5 +28,7 @@ namespace PizzaApp.Models
 
         public ICollection<RestaurantMenuItem> RestaurantMenuItems { get; set; }
         public ICollection<RestaurantIngredient> RestaurantIngredients { get; set; }
+        public ICollection<Reservation> Reservations { get; set; }
+        public ICollection<RestaurantTable> RestaurantTables { get; set; }
     }
 }

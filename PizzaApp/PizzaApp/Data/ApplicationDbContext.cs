@@ -107,6 +107,11 @@ namespace PizzaApp.Data
             {
                 restaurantTable.HasIndex(rt => new { rt.RestaurantId, rt.Name }).IsUnique();
             });
+
+            builder.Entity<ComplaintStatus>(complaintStatus =>
+            {
+                complaintStatus.HasIndex(cs => cs.Name).IsUnique();
+            });
         }
 
         public DbSet<Wholesaler> Wholesalers { get; set; }
@@ -130,5 +135,8 @@ namespace PizzaApp.Data
         public DbSet<ReservationRestaurantTable> ReservationRestaurantTables { get; set; }
         public DbSet<ReservationStatus> ReservationStatuses { get; set; }
         public DbSet<RestaurantTable> RestaurantTables { get; set; }
+
+        public DbSet<Complaint> Complaints { get; set; }
+        public DbSet<ComplaintStatus> ComplaintStatuses { get; set; }
     }
 }

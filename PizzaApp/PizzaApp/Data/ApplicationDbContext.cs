@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using PizzaApp.Models;
 using PizzaApp.Models.Authorization;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,64 @@ namespace PizzaApp.Data
                     .HasForeignKey(ur => ur.UserId)
                     .IsRequired();
             });
+
+            builder.Entity<Dish>(dish =>
+            {
+                dish.HasIndex(d => d.Name).IsUnique();
+            });
+
+            builder.Entity<DishIngredient>(dishIngredient =>
+            {
+                dishIngredient.HasIndex(di => new { di.IngredientId, di.DishId }).IsUnique();
+            });
+
+            builder.Entity<Ingredient>(ingredient =>
+            {
+                ingredient.HasIndex(i => i.Name).IsUnique();
+            });
+
+            builder.Entity<MenuItem>(menuItem =>
+            {
+                menuItem.HasIndex(m => m.Name).IsUnique();
+                menuItem.Property(m => m.Price).HasPrecision(2);
+            });
+
+            builder.Entity<MenuItemDish>(menuItemDish =>
+            {
+                menuItemDish.HasIndex(md => new { md.MenuItemId, md.DishId }).IsUnique();
+                menuItemDish.Property(m => m.AdditionalPrice).HasPrecision(2);
+            });
+
+            builder.Entity<Restaurant>(restaurant =>
+            {
+                restaurant.HasIndex(r => r.Name).IsUnique();
+                restaurant.HasIndex(r => r.Telephone).IsUnique();
+                restaurant.HasIndex(r => r.Email).IsUnique();
+            });
+
+
+            builder.Entity<RestaurantIngredient>(restaurantIngredient =>
+            {
+                restaurantIngredient.HasIndex(ri => new { ri.RestaurantId, ri.IngredientId }).IsUnique();
+            });
+
+            builder.Entity<RestaurantMenuItem>(restaurantMenuItem =>
+            {
+                restaurantMenuItem.HasIndex(rm => new { rm.RestaurantId, rm.MenuItemId }).IsUnique();
+            });
         }
+
+        public DbSet<Wholesaler> Wholesalers { get; set; }
+
+        public DbSet<Dish> Dishes { get; set; }
+        public DbSet<DishIngredient> DishIngredients { get; set; }
+        public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<MenuItem> MenuItems { get; set; }
+        public DbSet<MenuItemDish> MenuItemDishes { get; set; }
+        public DbSet<Restaurant> Restaurants { get; set; }
+        public DbSet<RestaurantIngredient> RestaurantIngredients { get; set; }
+        public DbSet<RestaurantMenuItem> RestaurantMenuItems { get; set; }
+
+        //public DbSet<Client> Clients { get; set; }
     }
 }

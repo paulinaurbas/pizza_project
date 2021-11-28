@@ -1,0 +1,39 @@
+﻿@model PizzaApp.Models.OrderMenuItemDish
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>OrderMenuItemDish</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="OrderMenuItemId" class="control-label"></label>
+                <select asp-for="OrderMenuItemId" class="form-control" asp-items="ViewBag.OrderMenuItemId"></select>
+                <span asp-validation-for="OrderMenuItemId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MenuItemDishId" class="control-label"></label>
+                <select asp-for="MenuItemDishId" class="form-control" asp-items="ViewBag.MenuItemDishId"></select>
+                <span asp-validation-for="MenuItemDishId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

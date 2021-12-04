@@ -12,6 +12,7 @@ namespace PizzaApp.Models
         [MaxLength(250)]
         public string Description { get; set; }
 
+        [Range(0, 100)]
         public int? NumberOfSeats { get; set; }
 
         [Required]

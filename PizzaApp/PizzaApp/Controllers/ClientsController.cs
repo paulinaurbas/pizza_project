@@ -46,6 +46,8 @@ namespace PizzaApp.Controllers
         // GET: Clients/Create
         public IActionResult Create()
         {
+            ViewData["ActionName"] = "Create";
+
             return View();
         }
 
@@ -62,6 +64,9 @@ namespace PizzaApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            ViewData["ActionName"] = "Create";
+
             return View(client);
         }
 
@@ -148,6 +153,35 @@ namespace PizzaApp.Controllers
         private bool ClientExists(int id)
         {
             return _context.Clients.Any(e => e.Id == id);
+        }
+
+        // GET: Clients/CreateComplaint
+        public IActionResult CreateComplaint()
+        {
+            ViewData["ActionName"] = "CreateComplaint";
+
+            return View("Create");
+        }
+
+        // POST: Clients/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateComplaint([Bind("Id,Name,Surname,Address,Email,Telephone")] Client client)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(client);
+
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("CreateUser", "Complaints", new { clientId = client.Id });
+            }
+
+            ViewData["ActionName"] = "CreateComplaint";
+
+            return View("Create", client);
         }
     }
 }

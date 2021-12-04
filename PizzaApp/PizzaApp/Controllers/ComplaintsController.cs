@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PizzaApp.Data;
+using PizzaApp.Enums;
 using PizzaApp.Models;
 
 namespace PizzaApp.Controllers
@@ -161,6 +162,39 @@ namespace PizzaApp.Controllers
         private bool ComplaintExists(int id)
         {
             return _context.Complaints.Any(e => e.Id == id);
+        }
+
+        // GET: Complaints/CreateUser
+        public IActionResult CreateUser(int clientId)
+        {
+            var complaint = new Complaint()
+            {
+                ClientId = clientId,
+            };
+
+            return View(complaint);
+        }
+
+        // POST: Complaints/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateUser([Bind("Id,Description,Date,ComplaintStatusId,ClientId")] Complaint complaint)
+        {
+            complaint.Date = DateTime.Now;
+            complaint.ComplaintStatusId = (int)ComplaintStatuses.Pending;
+
+            if (ModelState.IsValid)
+            {
+                _context.Add(complaint);
+
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(complaint);
         }
     }
 }

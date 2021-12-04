@@ -26,5 +26,7 @@ namespace PizzaApp.Models
         public ICollection<Order> Orders { get; set; }
         public ICollection<Reservation> Reservations { get; set; }
         public ICollection<Complaint> Complaints { get; set; }
+
+        public string DisplayClient => Name + " " + Surname;
     }
 }

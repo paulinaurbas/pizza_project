@@ -1,47 +1,56 @@
 ﻿@model IEnumerable<PizzaApp.Models.RestaurantIngredient>
 
 @{
-    ViewData["Title"] = "Index";
+	ViewData["Title"] = "Index";
+
+	var restaurant = ViewData["CurrentRestaurant"] as PizzaApp.Models.Restaurant;
 }
 
-<h1>Index</h1>
+<div class="row">
+	<div class="col-8">
+		<h1>@restaurant.Name</h1>
+	</div>
+	<div class="col-2">
+		<a class="btn btn-outline-success" style="top: 10px; position: absolute; width: 80%"
+		   asp-action="Create" asp-route-restaurantId="@restaurant.Id">Add</a>
+	</div>
+	<div class="col-2">
+		<a class="btn btn-outline-dark" style="top: 10px; position: absolute; width: 80%"
+		   asp-controller="Restaurants" asp-action="Index">Return</a>
+	</div>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Restaurant)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ingredient)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantity)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Restaurant.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ingredient.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
+	<thead>
+		<tr style="width: 100%">
+			<th style="width: 30%">
+				@Html.DisplayNameFor(model => model.Ingredient)
+			</th>
+			<th style="width: 20%">
+				@Html.DisplayNameFor(model => model.Quantity)
+			</th>
+						<th style="width: 30%"></th>
+			<th style="width: 20%"></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr style="width: 100%">
+				<td style="width: 30%">
+					@Html.DisplayFor(modelItem => item.Ingredient.Name)
+				</td>
+				<td style="width: 20%">
+					@Html.DisplayFor(modelItem => item.Quantity)
+				</td>
+				<td style="width: 30%"></td>
+				<td style="width: 20%">
+					<div class="btn-group btn-group-toggle" style="bottom: 4px">
+						<a class="btn btn-outline-secondary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+						<a class="btn btn-outline-secondary" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+					</div>
+				</td>
+			</tr>
+		}
+	</tbody>
 </table>

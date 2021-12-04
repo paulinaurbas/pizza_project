@@ -20,10 +20,19 @@ namespace PizzaApp.Controllers
         }
 
         // GET: RestaurantIngredients
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int restaurantId)
         {
-            var applicationDbContext = _context.RestaurantIngredients.Include(r => r.Ingredient).Include(r => r.Restaurant);
-            return View(await applicationDbContext.ToListAsync());
+            var restaurantIngredients = await _context.RestaurantIngredients
+                .Include(r => r.Ingredient)
+                .Include(r => r.Restaurant)
+                .Where(r => r.RestaurantId == restaurantId)
+                .ToListAsync();
+
+            var resturant = await _context.Restaurants.FindAsync(restaurantId);
+
+            ViewData["CurrentRestaurant"] = resturant;
+
+            return View(restaurantIngredients);
         }
 
         // GET: RestaurantIngredients/Details/5
@@ -47,11 +56,16 @@ namespace PizzaApp.Controllers
         }
 
         // GET: RestaurantIngredients/Create
-        public IActionResult Create()
+        public IActionResult Create(int restaurantId)
         {
+            var restaurantIngredient = new RestaurantIngredient()
+            {
+                RestaurantId = restaurantId
+            };
+
             ViewData["IngredientId"] = new SelectList(_context.Ingredients, "Id", "Name");
-            ViewData["RestaurantId"] = new SelectList(_context.Restaurants, "Id", "Address");
-            return View();
+
+            return View(restaurantIngredient);
         }
 
         // POST: RestaurantIngredients/Create
@@ -63,12 +77,25 @@ namespace PizzaApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(restaurantIngredient);
+                var existingRestaurantIngredient = await _context.RestaurantIngredients
+                    .Where(e => e.IngredientId == restaurantIngredient.IngredientId && e.RestaurantId == restaurantIngredient.RestaurantId).FirstOrDefaultAsync();
+
+                if (existingRestaurantIngredient != null)
+				{
+                    existingRestaurantIngredient.Quantity += restaurantIngredient.Quantity;
+                }
+				else
+				{
+                    _context.Add(restaurantIngredient);
+                }
+
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                return RedirectToAction(nameof(Index), new { restaurantId = restaurantIngredient.RestaurantId });
             }
+
             ViewData["IngredientId"] = new SelectList(_context.Ingredients, "Id", "Name", restaurantIngredient.IngredientId);
-            ViewData["RestaurantId"] = new SelectList(_context.Restaurants, "Id", "Address", restaurantIngredient.RestaurantId);
+
             return View(restaurantIngredient);
         }
 
@@ -81,12 +108,12 @@ namespace PizzaApp.Controllers
             }
 
             var restaurantIngredient = await _context.RestaurantIngredients.FindAsync(id);
+
             if (restaurantIngredient == null)
             {
                 return NotFound();
             }
-            ViewData["IngredientId"] = new SelectList(_context.Ingredients, "Id", "Name", restaurantIngredient.IngredientId);
-            ViewData["RestaurantId"] = new SelectList(_context.Restaurants, "Id", "Address", restaurantIngredient.RestaurantId);
+
             return View(restaurantIngredient);
         }
 
@@ -120,10 +147,9 @@ namespace PizzaApp.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { restaurantId = restaurantIngredient.RestaurantId });
             }
-            ViewData["IngredientId"] = new SelectList(_context.Ingredients, "Id", "Name", restaurantIngredient.IngredientId);
-            ViewData["RestaurantId"] = new SelectList(_context.Restaurants, "Id", "Address", restaurantIngredient.RestaurantId);
+
             return View(restaurantIngredient);
         }
 
@@ -155,7 +181,7 @@ namespace PizzaApp.Controllers
             var restaurantIngredient = await _context.RestaurantIngredients.FindAsync(id);
             _context.RestaurantIngredients.Remove(restaurantIngredient);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), new { restaurantId = restaurantIngredient.RestaurantId });
         }
 
         private bool RestaurantIngredientExists(int id)

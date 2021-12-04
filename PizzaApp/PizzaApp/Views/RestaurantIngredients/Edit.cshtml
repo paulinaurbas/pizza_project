@@ -4,25 +4,24 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<div class="row">
+	<div class="col-10">
+		<h1>Edit</h1>
+	</div>
+	<div class="col-2">
+		<a class="btn btn-outline-dark" style="top: 10px; position: absolute; width: 80%" asp-action="Index" asp-route-restaurantId="@Model.RestaurantId">Return</a>
+	</div>
+</div>
 
 <h4>RestaurantIngredient</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
+            @Html.Hidden("RestaurantId")
+            @Html.Hidden("IngredientId")
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="RestaurantId" class="control-label"></label>
-                <select asp-for="RestaurantId" class="form-control" asp-items="ViewBag.RestaurantId"></select>
-                <span asp-validation-for="RestaurantId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IngredientId" class="control-label"></label>
-                <select asp-for="IngredientId" class="form-control" asp-items="ViewBag.IngredientId"></select>
-                <span asp-validation-for="IngredientId" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="Quantity" class="control-label"></label>
                 <input asp-for="Quantity" class="form-control" />
@@ -33,10 +32,6 @@
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

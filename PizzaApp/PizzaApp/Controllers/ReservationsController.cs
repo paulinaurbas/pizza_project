@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PizzaApp.Data;
+using PizzaApp.Enums;
 using PizzaApp.Models;
 
 namespace PizzaApp.Controllers
@@ -167,6 +168,42 @@ namespace PizzaApp.Controllers
         private bool ReservationExists(int id)
         {
             return _context.Reservations.Any(e => e.Id == id);
+        }
+
+        // GET: Reservations/CreateUser
+        public IActionResult CreateUser(int clientId)
+        {
+            var reservation = new Reservation()
+            {
+                ClientId = clientId,
+            };
+
+            ViewData["RestaurantId"] = new SelectList(_context.Restaurants, "Id", "Name");
+
+            return View(reservation);
+        }
+
+        // POST: Reservations/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateUser([Bind("Id,Description,NumberOfSeats,StartDate,EndDate,ClientId,RestaurantId,ReservationStatusId")] Reservation reservation)
+        {
+            reservation.ReservationStatusId = (int)ReservationStatuses.Pending;
+
+            if (ModelState.IsValid)
+            {
+                _context.Add(reservation);
+
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            ViewData["RestaurantId"] = new SelectList(_context.Restaurants, "Id", "Name", reservation.RestaurantId);
+
+            return View(reservation);
         }
     }
 }

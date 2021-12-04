@@ -183,7 +183,7 @@ namespace PizzaApp.Controllers
         public async Task<IActionResult> CreateUser([Bind("Id,Description,Date,ComplaintStatusId,ClientId")] Complaint complaint)
         {
             complaint.Date = DateTime.Now;
-            complaint.ComplaintStatusId = (int)ComplaintStatuses.Pending;
+            complaint.ComplaintStatusId = (int)Enums.ComplaintStatuses.Pending;
 
             if (ModelState.IsValid)
             {

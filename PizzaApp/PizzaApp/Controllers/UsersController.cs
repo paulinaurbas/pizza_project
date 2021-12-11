@@ -134,10 +134,14 @@ namespace PizzaApp.Controllers
         // POST: UserController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(string id, IFormCollection collection)
+        public async Task<ActionResult> Delete(string id, IFormCollection collection)
         {
             try
             {
+                var user = _context.Users.Find(id);
+
+                await _userManager.DeleteAsync(user);
+
                 return RedirectToAction(nameof(Index));
             }
             catch

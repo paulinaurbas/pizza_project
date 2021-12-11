@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace PizzaApp.ViewModels.Authorization
 {
@@ -10,5 +11,12 @@ namespace PizzaApp.ViewModels.Authorization
 
         [EmailAddress]
         public string Email { get; set; }
+
+        public List<ApplicationRoleViewModel> ApplicationRoleViewModels { get; set; }
+
+        public ApplicationUserViewModel()
+        {
+            ApplicationRoleViewModels = new List<ApplicationRoleViewModel>();
+        }
     }
 }

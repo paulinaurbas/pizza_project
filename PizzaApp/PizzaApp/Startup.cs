@@ -31,20 +31,18 @@ namespace PizzaApp
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDatabaseDeveloperPageExceptionFilter();
 
-            // For Identity  
-            services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+            services.AddDatabaseDeveloperPageExceptionFilter();
+ 
+            services.AddDefaultIdentity<ApplicationUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = true;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
                 options.Lockout.MaxFailedAccessAttempts = 5;
                 options.Lockout.AllowedForNewUsers = true;
             })
+                .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-
-            services.AddRazorPages();
-
 
             services.AddControllersWithViews();
         }

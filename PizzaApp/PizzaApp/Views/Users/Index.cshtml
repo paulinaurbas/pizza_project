@@ -1,46 +1,69 @@
 ﻿@model IEnumerable<PizzaApp.ViewModels.Authorization.ApplicationUserViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+	ViewData["Title"] = "Index";
+
+	var roles = ViewData["Roles"] as IEnumerable<PizzaApp.ViewModels.Authorization.ApplicationRoleViewModel>;
 }
 
 <div class="row">
-    <div class="col-10">
-        <h1>Users</h1>
-    </div>
-        <div class="col-2">
-        <a class="btn btn-outline-success" style="top: 10px; position: absolute; width: 80%"
-           asp-action="Create">????</a>
-    </div>
+	<div class="col-10">
+		<h1>Authorization and authentication</h1>
+	</div>
+	<div class="col-2">
+		<a class="btn btn-outline-success" style="top: 10px; position: absolute; width: 80%"
+		   asp-action="Create">????</a>
+	</div>
 </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.UserName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
-            </td>
-        </tr>
-}
-    </tbody>
+<table class="table table-striped table-sm">
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.UserName)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Email)
+			</th>
+			<th colspan=@roles.Count()>
+				Roles
+			</th>
+			<th>
+				Manage
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var user in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => user.UserName)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => user.Email)
+				</td>
+				@{
+					foreach (var role in roles)
+					{
+						<td>
+							@{
+								if (user.ApplicationRoleViewModels.Any(e => e.Id == role.Id))
+								{
+									<a class="btn btn-info btn-sm" asp-action="RemoveUserRole" asp-route-userId="@user.Id" asp-route-roleId="@role.Id">@role.Name</a>
+								}
+								else
+								{
+									<a class="btn btn-outline-info btn-sm" asp-action="AddUserRole" asp-route-userId="@user.Id" asp-route-roleId="@role.Id">@role.Name</a>
+								}
+							}
+						</td>
+					}
+				}
+				<td>
+					<a class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="@user.Id">Delete</a>
+				</td>
+			</tr>
+		}
+	</tbody>
 </table>

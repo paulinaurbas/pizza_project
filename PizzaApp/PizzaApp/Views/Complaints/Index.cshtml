@@ -4,10 +4,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Here you can find complains</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+ 
 </p>
 <table class="table">
     <thead>
@@ -19,7 +19,7 @@
                 @Html.DisplayNameFor(model => model.Date)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ComplaintStatus)
+               Complain status
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Client)
@@ -40,7 +40,7 @@
                 @Html.DisplayFor(modelItem => item.ComplaintStatus.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Client.Address)
+                @Html.DisplayFor(modelItem => item.Client.DisplayClient)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

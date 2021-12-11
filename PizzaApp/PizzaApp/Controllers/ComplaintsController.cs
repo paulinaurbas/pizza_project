@@ -50,7 +50,7 @@ namespace PizzaApp.Controllers
         // GET: Complaints/Create
         public IActionResult Create()
         {
-            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Address");
+            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "DisplayClient");
             ViewData["ComplaintStatusId"] = new SelectList(_context.ComplaintStatuses, "Id", "Name");
             return View();
         }
@@ -68,7 +68,7 @@ namespace PizzaApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Address", complaint.ClientId);
+            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "DisplayClient", complaint.ClientId);
             ViewData["ComplaintStatusId"] = new SelectList(_context.ComplaintStatuses, "Id", "Name", complaint.ComplaintStatusId);
             return View(complaint);
         }
@@ -86,7 +86,7 @@ namespace PizzaApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Address", complaint.ClientId);
+            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "DisplayClient", complaint.ClientId);
             ViewData["ComplaintStatusId"] = new SelectList(_context.ComplaintStatuses, "Id", "Name", complaint.ComplaintStatusId);
             return View(complaint);
         }
@@ -123,7 +123,7 @@ namespace PizzaApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Address", complaint.ClientId);
+            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "DisplayClient", complaint.ClientId);
             ViewData["ComplaintStatusId"] = new SelectList(_context.ComplaintStatuses, "Id", "Name", complaint.ComplaintStatusId);
             return View(complaint);
         }

@@ -51,7 +51,7 @@ namespace PizzaApp.Controllers
         // GET: Reservations/Create
         public IActionResult Create()
         {
-            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Address");
+            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "DisplayClient");
             ViewData["ReservationStatusId"] = new SelectList(_context.ReservationStatuses, "Id", "Name");
             ViewData["RestaurantId"] = new SelectList(_context.Restaurants, "Id", "Address");
             return View();
@@ -70,7 +70,7 @@ namespace PizzaApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Address", reservation.ClientId);
+            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "DisplayClient", reservation.ClientId);
             ViewData["ReservationStatusId"] = new SelectList(_context.ReservationStatuses, "Id", "Name", reservation.ReservationStatusId);
             ViewData["RestaurantId"] = new SelectList(_context.Restaurants, "Id", "Address", reservation.RestaurantId);
             return View(reservation);
@@ -89,7 +89,7 @@ namespace PizzaApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Address", reservation.ClientId);
+            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "DisplayClient", reservation.ClientId);
             ViewData["ReservationStatusId"] = new SelectList(_context.ReservationStatuses, "Id", "Name", reservation.ReservationStatusId);
             ViewData["RestaurantId"] = new SelectList(_context.Restaurants, "Id", "Address", reservation.RestaurantId);
             return View(reservation);

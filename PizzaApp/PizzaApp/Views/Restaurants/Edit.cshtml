@@ -1,12 +1,12 @@
 ﻿@model PizzaApp.Models.Restaurant
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit information about your restaurant";
 }
 
-<h1>Edit</h1>
+<h1>Edit information about your restauration</h1>
 
-<h4>Restaurant</h4>
+<h>Here you can edit information about your restauration</h>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -34,12 +34,12 @@
                 <span asp-validation-for="Telephone" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="StartTime" class="control-label"></label>
+                <label asp-for="StartTime" class="control-label">Opening hour</label>
                 <input asp-for="StartTime" class="form-control" />
                 <span asp-validation-for="StartTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EndTime" class="control-label"></label>
+                <label asp-for="EndTime" class="control-label">Closing hour</label>
                 <input asp-for="EndTime" class="form-control" />
                 <span asp-validation-for="EndTime" class="text-danger"></span>
             </div>
@@ -50,9 +50,6 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

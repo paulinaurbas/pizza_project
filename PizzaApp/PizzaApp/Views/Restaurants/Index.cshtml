@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<PizzaApp.Models.Restaurant>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Your restauration";
 }
 
 <div class="row">
     <div class="col-10">
-        <h1>Restaurations</h1>
+        <h1>Your restaurations</h1>
     </div>
         <div class="col-2">
         <a class="btn btn-outline-success" style="top: 10px; position: absolute; width: 80%"
@@ -30,10 +30,10 @@
                 @Html.DisplayNameFor(model => model.Telephone)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StartTime)
+               Opening hour
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EndTime)
+                Closing hour
             </th>
             <th></th>
         </tr>

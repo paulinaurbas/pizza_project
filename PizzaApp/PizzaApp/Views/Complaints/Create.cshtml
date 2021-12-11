@@ -1,7 +1,7 @@
 ﻿@model PizzaApp.Models.Complaint
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Share your option";
 }
 <h2>Share with us your opinion!</h2>
 
@@ -38,9 +38,6 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

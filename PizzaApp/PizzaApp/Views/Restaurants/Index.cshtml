@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PizzaApp.Models.Restaurant>
+@model IEnumerable<PizzaApp.Models.Restaurant>
 
 @{
     ViewData["Title"] = "Your restauration";
@@ -6,7 +6,7 @@
 
 <div class="row">
     <div class="col-10">
-        <h1>Your restaurations</h1>
+        <h1>Restaurants</h1>
     </div>
         <div class="col-2">
         <a class="btn btn-outline-success" style="top: 10px; position: absolute; width: 80%"
@@ -30,10 +30,7 @@
                 @Html.DisplayNameFor(model => model.Telephone)
             </th>
             <th>
-               Opening hour
-            </th>
-            <th>
-                Closing hour
+                Opening hours
             </th>
             <th></th>
         </tr>
@@ -54,10 +51,7 @@
                 @Html.DisplayFor(modelItem => item.Telephone)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndTime)
+                @Html.DisplayFor(modelItem => item.DisplayTime)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

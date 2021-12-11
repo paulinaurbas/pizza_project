@@ -30,5 +30,7 @@ namespace PizzaApp.Models
         public ICollection<RestaurantIngredient> RestaurantIngredients { get; set; }
         public ICollection<Reservation> Reservations { get; set; }
         public ICollection<RestaurantTable> RestaurantTables { get; set; }
+
+        public string DisplayTime => StartTime.ToShortTimeString() + " - " + EndTime.ToShortTimeString();
     }
 }

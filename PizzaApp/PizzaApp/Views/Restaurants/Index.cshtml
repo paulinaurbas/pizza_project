@@ -6,7 +6,7 @@
 
 <div class="row">
     <div class="col-10">
-        <h1>Restaurations</h1>
+        <h1>Restaurants</h1>
     </div>
         <div class="col-2">
         <a class="btn btn-outline-success" style="top: 10px; position: absolute; width: 80%"
@@ -30,10 +30,7 @@
                 @Html.DisplayNameFor(model => model.Telephone)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StartTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndTime)
+                Opening hours
             </th>
             <th></th>
         </tr>
@@ -54,10 +51,7 @@
                 @Html.DisplayFor(modelItem => item.Telephone)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndTime)
+                @Html.DisplayFor(modelItem => item.DisplayTime)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
